@@ -1,0 +1,22 @@
+language: go
+
+go:
+  - 1.9.x
+  - 1.10.x
+  - 1.11.x
+
+
+before_install:
+  - dep ensure
+
+# script:
+  # - ./pre-commit
+  # - go test -cpu=1,2 -v -tags integration ./...
+
+deploy:
+  provider: releases
+  api_key: ""
+  file: "vigor"
+  skip_cleanup: true
+  on:
+    tags: true
