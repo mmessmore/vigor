@@ -11,3 +11,4 @@ deploy:
   file: vigor
   on:
     repo: mmessmore/vigor
+    tags: true
