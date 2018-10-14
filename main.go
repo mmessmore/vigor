@@ -13,7 +13,7 @@ import (
 	"github.com/mmessmore/vigor/graphite"
 )
 
-var options struct {
+type Options struct {
 	Verbose    bool   `short:"v" long:"verbose" description:"verbose output"`
 	Dnssec     bool   `short:"s" long:"dnssec" description:"request DNSSEC"`
 	ConfigFile string `short:"c" long:"config" default:"/etc/resolv.conf" description:"Resolver config file"`
@@ -22,11 +22,13 @@ var options struct {
 	Name       string `short:"n" long:"name" required:"1"`
 }
 
+var options = Options{}
+
 func main() {
 
-	config := new_parse_args()
+	config := parse_args()
 
-	elapsed := lookup(config)
+	_, elapsed := Lookup(config)
 	ms := int(math.Round(elapsed.Seconds() * 1000))
 
 	if options.Verbose {
@@ -35,7 +37,7 @@ func main() {
 	graphite.SendMetric(options.Graphite, options.GPath, ms)
 }
 
-func new_parse_args() *dns.ClientConfig {
+func parse_args() *dns.ClientConfig {
 	_, err := flags.Parse(&options)
 	if err != nil {
 		os.Exit(22)
@@ -50,25 +52,7 @@ func new_parse_args() *dns.ClientConfig {
 	return config
 }
 
-// func parse_args() (*dns.ClientConfig, *Options) {
-// options := Options{}
-// var config_file = flag.String("config", "/etc/resolv.conf", "Resolver config file")
-// flag.BoolVar(&options.Dnssec, "dnssec", false, "Enable DNSSEC")
-
-// flag.Parse()
-// args := flag.Args()
-
-// if len(args) < 1 {
-// fmt.Fprintln(os.Stderr, "Missing hostname")
-// os.Exit(22)
-// }
-// options.Name = args[0]
-
-// config, _ := dns.ClientConfigFromFile(*config_file)
-// return config, &options
-// }
-
-func lookup(config *dns.ClientConfig) time.Duration {
+func Lookup(config *dns.ClientConfig) (string, time.Duration) {
 	c := new(dns.Client)
 	m := new(dns.Msg)
 	m.SetQuestion(dns.Fqdn(options.Name), dns.TypeA)
@@ -95,5 +79,5 @@ func lookup(config *dns.ClientConfig) time.Duration {
 			fmt.Println(a)
 		}
 	}
-	return elapsed
+	return fmt.Sprintf("%v", r.Answer[0]), elapsed
 }
