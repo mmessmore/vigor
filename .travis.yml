@@ -1,21 +1,13 @@
 language: go
-
 go:
-  - 1.11.x
-
-
+- 1.11.x
 before_install:
-  - go get github.com/golang/dep/cmd/dep
-  - dep ensure
-
-# script:
-  # - ./pre-commit
-  # - go test -cpu=1,2 -v -tags integration ./...
-
+- go get github.com/golang/dep/cmd/dep
+- dep ensure
 deploy:
   provider: releases
-  api_key: ""
-  file: "vigor"
-  skip_cleanup: true
+  api_key:
+    secure: UkKaR/HkaIhExN6rsQ9BmxWqnMdTzKmRJqnncyd5GsMBmVyDODdO805/Neir9LIW2hdw54ailNhKTMeU5z79RhJQDDHpx7Z4SsnNJ6ou/O8kLwMzjGsWuIlOSqR9AF5w4Nk2ai18mmZqHtZ/+/c66dVZXMPMb4/Oc6KWpY0BDrXDFsek0fyG59+5LMTyiPlIY+R7dqvVPzDUwz79Mlh8DCgeSfSr/RCq47n+s76kEfkUJCDW9R3Te3BUWul2osLDhnN/QKPrmdSdeb8/jlP1WiRFvdBuhR1UjwzRcL45HLfJFODNMTu4iKKl+gYHnaG9Vs+HYMutdvczn6qVcpx/17mfYmv+wmgbwjraXiTZX+BFbM3Nzus1P5AJQDwLHbwzBAcvnbmOE2qjdftSZtaXZercQfuA9G2tlRzQe78Qc6bwDCYa//G82w50/tWcDsNIgraa1os22gWC4XsAyICZGc9ttACTRlBqW920fz+hv3zJmLe1I6+6tZQaZ+XYi7bzowUJb6ZhezZ10Mxv0Z4zdpVIp181L1esbEK4GghTGq+rIr3hrqBRLasRz+3pWpFMYTuEb3DnjHR43IzmqNny7etWHFh1Lkp+Cwq1uJjwHcXmTK0OCunV2uDhAH+PG6mcw58GA38KFzQY4f/hu9oIRztXgjI4Wdz/zbkDLHSEvU0=
+  file: vigor
   on:
-    tags: true
+    repo: mmessmore/vigor
