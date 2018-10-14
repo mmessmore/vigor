@@ -16,9 +16,9 @@ import (
 var options struct {
 	Verbose    bool   `short:"v" long:"verbose" description:"verbose output"`
 	Dnssec     bool   `short:"s" long:"dnssec" description:"request DNSSEC"`
-	ConfigFile string `short:"c" long:"config" default:"/etc/resolv.conf" description:"Resolver config file (default /etc/resolv.conf)"`
+	ConfigFile string `short:"c" long:"config" default:"/etc/resolv.conf" description:"Resolver config file"`
 	Graphite   string `short:"g" long:"graphite" required:"1" description:"Graphite host and port eg. 10.5.4.3:2003"`
-	GPath      string `short:"p" long:"path" default:"" description:"Graphite Metric Path"`
+    GPath      string `short:"p" long:"path" default:"" description:"Graphite Metric Path (default: vigor.hostname.first_resolver"`
 	Name       string `short:"n" long:"name" required:"1"`
 }
 

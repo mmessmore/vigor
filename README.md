@@ -19,3 +19,8 @@ Application Options:
 Help Options:
   -h, --help      Show this help message
   ```
+
+# TODO
+
+- Allow for multiple lookups, multiple hostnames
+- Move name to a proper argument vs. option
