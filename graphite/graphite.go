@@ -10,7 +10,7 @@ import (
 func SendMetric(dest string, path string, metric int) {
 	conn, err := net.Dial("tcp", dest)
 	if err != nil {
-		log.Panic(err)
+		log.Println(err.Error())
 	}
 
 	fmt.Fprintln(conn, path, metric, time.Now().Unix())
