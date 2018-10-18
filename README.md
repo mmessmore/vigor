@@ -8,8 +8,8 @@ DNS resolution metrics for Graphite
 2. Set up your `$GOPATH` (default, ~/go)
 3. `mkdir -p cd $GOPATH/src/github.com/mmessmore`
 4. `cd $GOPATH/src/github.com/mmessmore`
-4. Git clone the above URL
-5.
+5. Git clone the above URL
+5. then
 
 ```
 cd vigor
