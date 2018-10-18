@@ -2,18 +2,18 @@ all: build
 
 build: vigor.exe vigor.darwin vigor.linux vigor.freebsd
 
-vigor.exe:
+vigor.exe: main.go
 	GOOS=windows GOARCH=amd64 go build
 
-vigor.linux:
+vigor.linux: main.go
 	GOOS=linux GOARCH=amd64 go build
 	mv vigor vigor.linux
 
-vigor.darwin:
+vigor.darwin: main.go
 	GOOS=darwin GOARCH=amd64 go build
 	mv vigor vigor.darwin
 
-vigor.freebsd:
+vigor.freebsd: main.go
 	GOOS=darwin GOARCH=amd64 go build
 	mv vigor vigor.freebsd
 

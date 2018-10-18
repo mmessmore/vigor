@@ -25,7 +25,7 @@ type Options struct {
 }
 
 type Work struct {
-	Duration int
+	Duration float64
 	Error    error
 }
 
@@ -44,11 +44,11 @@ func worker() {
 	conn := GetGraphiteClient(options.Graphite)
 	for {
 		time.Sleep(time.Duration(options.ReportInterval) * time.Second)
-		total := 0
+		total := 0.0
 		num := 0
 		errs := 0
-		high := 0
-		low := 0
+		high := 0.0
+		low := 0.0
 	Inner:
 		for {
 			select {
@@ -71,7 +71,7 @@ func worker() {
 				SendMetric(
 					conn,
 					fmt.Sprintf("%s.avg_ms", options.GPath),
-					int(math.Round(float64(total)/float64(num))))
+					total/float64(num))
 				SendMetric(
 					conn,
 					fmt.Sprintf("%s.total_ms", options.GPath),
@@ -79,11 +79,11 @@ func worker() {
 				SendMetric(
 					conn,
 					fmt.Sprintf("%s.num", options.GPath),
-					num)
+					float64(num))
 				SendMetric(
 					conn,
 					fmt.Sprintf("%s.errors", options.GPath),
-					errs)
+					float64(errs))
 				SendMetric(
 					conn,
 					fmt.Sprintf("%s.high", options.GPath),
@@ -103,10 +103,10 @@ func collect(config *dns.ClientConfig) {
 	for {
 		time.Sleep(time.Duration(options.QueryInterval) * time.Second)
 		elapsed, err := Lookup(config)
-		ms := int(math.Round(elapsed.Seconds() * 1000))
+		ms := float64(math.Round(float64(elapsed.Nanoseconds()) / 1000000.0))
 
 		if options.Verbose {
-			log.Printf("That took %d milliseconds\n", ms)
+			log.Printf("That took %f milliseconds\n", ms)
 		}
 		WorkQueue <- Work{ms, err}
 	}
@@ -168,7 +168,7 @@ func GetGraphiteClient(dest string) net.Conn {
 	return conn
 }
 
-func SendMetric(conn net.Conn, path string, metric int) {
+func SendMetric(conn net.Conn, path string, metric float64) {
 	_, err := fmt.Fprintln(conn, path, metric, time.Now().Unix())
 	if err != nil {
 		log.Printf("Graphite Connection misdapeared.  Retrying once.")
@@ -182,3 +182,4 @@ func SendMetric(conn net.Conn, path string, metric int) {
 	}
 	fmt.Println(path, metric, time.Now().Unix())
 }
+
