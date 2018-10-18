@@ -10,3 +10,10 @@
 
 # Output of the go coverage tool, specifically when used with LiteIDE
 *.out
+
+vigor.darwin
+vigor.exe
+vigor.freebsd
+vigor.linux
+
+.idea
