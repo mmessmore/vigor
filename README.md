@@ -1,27 +1,16 @@
-# vigor [![Build Status](https://travis-ci.org/mmessmore/vigor.svg?branch=master)](https://travis-ci.org/mmessmore/vigor)
+# vigor
 DNS resolution metrics for Graphite
 
-Looks up a record with or without EDNS/DNSSEC and shove the response time into a graphite server or something that handles graphit formatted metrics.
 
-```
-Usage:
-  vigor [OPTIONS]
+# Setting up your build environment
 
-Application Options:
-  -v, --verbose   verbose output
-  -s, --dnssec    request DNSSEC
-  -c, --config=   Resolver config file (default /etc/resolv.conf) (default:
-                  /etc/resolv.conf)
-  -g, --graphite= Graphite host and port eg. 10.5.4.3:2003
-  -p, --path=     Graphite Metric Path
-  -n, --name=
+1. [Install Go](https://golang.org/doc/install)
+2. Set up your `$GOPATH`
+3. `mkdir -p cd $GOPATH/src/github.com/mmessmore`
+4. Git clone the above URL
+5. `go get github.com/tools/godep`
+6. `godep restore`
 
-Help Options:
-  -h, --help      Show this help message
-  ```
+Now you have all the dependencies and goodness needed.
 
-# TODO
-
-- Allow for multiple lookups, multiple hostnames
-- Move name to a proper argument vs. option
-- Get CI and releases working
+Feel free to `go build` to your hearts content.
