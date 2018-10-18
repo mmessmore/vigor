@@ -11,17 +11,17 @@ import (
 
 	"github.com/jessevdk/go-flags"
 	"github.com/miekg/dns"
-	"github.com/mmessmore/vigor/graphite"
 )
 
 type Options struct {
-	Verbose    bool   `short:"v" long:"verbose" description:"verbose output"`
-	Dnssec     bool   `short:"s" long:"dnssec" description:"request DNSSEC"`
-	ConfigFile string `short:"c" long:"config" default:"/etc/resolv.conf" description:"Resolver config file"`
-	Graphite   string `short:"g" long:"graphite" required:"1" description:"Graphite host and port eg. 10.5.4.3:2003"`
-	GPath      string `short:"p" long:"path" default:"" description:"Graphite Metric Path (default: vigor.hostname.first_resolver"`
-	Name       string `short:"n" long:"name" required:"1"`
-	Interval   int64  `short:"i" long:"interval" default:"10"`
+	Verbose        bool   `short:"v" long:"verbose" description:"verbose output"`
+	Dnssec         bool   `short:"s" long:"dnssec" description:"request DNSSEC"`
+	ConfigFile     string `short:"c" long:"config" default:"/etc/resolv.conf" description:"Resolver config file"`
+	Graphite       string `short:"g" long:"graphite" required:"1" description:"Graphite host and port eg. 10.5.4.3:2003"`
+	GPath          string `short:"p" long:"path" default:"" description:"Graphite Metric Path (default: vigor.hostname.first_resolver"`
+	Name           string `short:"n" long:"name" required:"1"`
+	ReportInterval int64  `short:"r" long:"report-interval" default:"10" description:"Report every x s"`
+	QueryInterval  int64  `short:"q" long:"query-interval" default:"1" description:"Query every y s"`
 }
 
 type Work struct {
@@ -41,36 +41,58 @@ func main() {
 }
 
 func worker() {
+	conn := GetGraphiteClient(options.Graphite)
 	for {
-		time.Sleep(time.Duration(options.Interval) * time.Second)
+		time.Sleep(time.Duration(options.ReportInterval) * time.Second)
 		total := 0
 		num := 0
-		errors := 0
+		errs := 0
+		high := 0
+		low := 0
 	Inner:
 		for {
 			select {
 			case val := <-WorkQueue:
 				total += val.Duration
 				if val.Error != nil {
-					errors++
+					errs++
 				}
 				num++
+				if val.Duration > high {
+					high = val.Duration
+				}
+				if val.Duration < low {
+					low = val.Duration
+				}
 			default:
 				if options.Verbose {
 					fmt.Println("Sending metrics")
 				}
-				graphite.SendMetric(
-					options.Graphite,
+				SendMetric(
+					conn,
 					fmt.Sprintf("%s.avg_ms", options.GPath),
 					int(math.Round(float64(total)/float64(num))))
-				graphite.SendMetric(
-					options.Graphite,
+				SendMetric(
+					conn,
+					fmt.Sprintf("%s.total_ms", options.GPath),
+					total)
+				SendMetric(
+					conn,
 					fmt.Sprintf("%s.num", options.GPath),
 					num)
-				graphite.SendMetric(
-					options.Graphite,
+				SendMetric(
+					conn,
 					fmt.Sprintf("%s.errors", options.GPath),
-					errors)
+					errs)
+				SendMetric(
+					conn,
+					fmt.Sprintf("%s.high", options.GPath),
+					high)
+				SendMetric(
+					conn,
+					fmt.Sprintf("%s.low", options.GPath),
+					low)
+
 				break Inner
 			}
 		}
@@ -79,7 +101,7 @@ func worker() {
 
 func collect(config *dns.ClientConfig) {
 	for {
-		time.Sleep(time.Duration(1) * time.Second)
+		time.Sleep(time.Duration(options.QueryInterval) * time.Second)
 		elapsed, err := Lookup(config)
 		ms := int(math.Round(elapsed.Seconds() * 1000))
 
@@ -136,4 +158,27 @@ func Lookup(config *dns.ClientConfig) (time.Duration, error) {
 		}
 	}
 	return elapsed, nil
+}
+
+func GetGraphiteClient(dest string) net.Conn {
+	conn, err := net.Dial("tcp", dest)
+	if err != nil {
+		log.Fatalln(err.Error())
+	}
+	return conn
+}
+
+func SendMetric(conn net.Conn, path string, metric int) {
+	_, err := fmt.Fprintln(conn, path, metric, time.Now().Unix())
+	if err != nil {
+		log.Printf("Graphite Connection misdapeared.  Retrying once.")
+		log.Printf("Once.")
+		conn = GetGraphiteClient(options.Graphite)
+		_, inerr := fmt.Fprintln(conn, path, metric, time.Now().Unix())
+		if inerr != nil {
+			log.Printf("Graphite's still gone.  Giving up hope.")
+			log.Fatal(inerr.Error())
+		}
+	}
+	fmt.Println(path, metric, time.Now().Unix())
 }
