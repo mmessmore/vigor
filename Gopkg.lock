@@ -10,12 +10,12 @@
   version = "v1.4.0"
 
 [[projects]]
-  digest = "1:857519ede212509c0325923628682c94d837329fda0f7409164fb4862618e50d"
+  digest = "1:309481c576a4fd77dbd08a50a5ea29e016c453e6708af55c95aaf9bd58b55e3a"
   name = "github.com/miekg/dns"
   packages = ["."]
   pruneopts = "UT"
-  revision = "2acbc9eff343291e671c1a9ba7be3201bf66dfd6"
-  version = "v1.1.17"
+  revision = "aae7df65e6178e7937664e9c3036f62fc2098d7c"
+  version = "v1.1.25"
 
 [[projects]]
   branch = "master"
