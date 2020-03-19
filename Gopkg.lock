@@ -10,12 +10,12 @@
   version = "v1.4.0"
 
 [[projects]]
-  digest = "1:857519ede212509c0325923628682c94d837329fda0f7409164fb4862618e50d"
+  digest = "1:3e2a07391c0756e06504dfa2fb6c52d55261c8d5a9d790ab316a1544bbe87b0d"
   name = "github.com/miekg/dns"
   packages = ["."]
   pruneopts = "UT"
-  revision = "2acbc9eff343291e671c1a9ba7be3201bf66dfd6"
-  version = "v1.1.17"
+  revision = "f515aa579d28efa1af67d9a62cc57f2dfe59da76"
+  version = "v1.1.29"
 
 [[projects]]
   branch = "master"
@@ -49,6 +49,23 @@
   packages = ["unix"]
   pruneopts = "UT"
   revision = "fa43e7bc11baaae89f3f902b2b4d832b68234844"
+
+[[projects]]
+  branch = "master"
+  digest = "1:ae972188affcffb27a1439cbbbdb72e0e9237c435baee9c25648ea750a0e37c6"
+  name = "golang.org/x/tools"
+  packages = [
+    "go/ast/astutil",
+    "go/gcexportdata",
+    "go/internal/gcimporter",
+    "go/internal/packagesdriver",
+    "go/packages",
+    "go/types/typeutil",
+    "internal/gocommand",
+    "internal/packagesinternal",
+  ]
+  pruneopts = "UT"
+  revision = "ba25ddc8556632eb7465fa8a7b297d3698b18821"
 
 [solve-meta]
   analyzer-name = "dep"
