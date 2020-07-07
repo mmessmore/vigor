@@ -10,12 +10,12 @@
   version = "v1.4.0"
 
 [[projects]]
-  digest = "1:857519ede212509c0325923628682c94d837329fda0f7409164fb4862618e50d"
+  digest = "1:4fc04cb66a8c9cf587714772eea987936363e7f918e3405e09bc9b248dc1e236"
   name = "github.com/miekg/dns"
   packages = ["."]
   pruneopts = "UT"
-  revision = "2acbc9eff343291e671c1a9ba7be3201bf66dfd6"
-  version = "v1.1.17"
+  revision = "f17e6c71716bcd6e432130aea311be5eb45f1b12"
+  version = "v1.1.30"
 
 [[projects]]
   branch = "master"
@@ -27,6 +27,14 @@
   ]
   pruneopts = "UT"
   revision = "a92615f3c49003920a58dedcf32cf55022cefb8d"
+
+[[projects]]
+  digest = "1:2199118a5de91125b472c6a71ecd81b636d7ce252f64087e57f1ba5830f1451a"
+  name = "golang.org/x/mod"
+  packages = ["semver"]
+  pruneopts = "UT"
+  revision = "859b3ef565e237f9f1a0fb6b55385c497545680d"
+  version = "v0.3.0"
 
 [[projects]]
   branch = "master"
@@ -49,6 +57,39 @@
   packages = ["unix"]
   pruneopts = "UT"
   revision = "fa43e7bc11baaae89f3f902b2b4d832b68234844"
+
+[[projects]]
+  branch = "master"
+  digest = "1:f8f15018dc8813efbbae47d508360ae9a16d70ca9dab1729669eca226f98334b"
+  name = "golang.org/x/tools"
+  packages = [
+    "go/ast/astutil",
+    "go/gcexportdata",
+    "go/internal/gcimporter",
+    "go/internal/packagesdriver",
+    "go/packages",
+    "go/types/typeutil",
+    "internal/event",
+    "internal/event/core",
+    "internal/event/keys",
+    "internal/event/label",
+    "internal/gocommand",
+    "internal/packagesinternal",
+    "internal/typesinternal",
+  ]
+  pruneopts = "UT"
+  revision = "b22de6825cf74d81635578b717537f7118af18fb"
+
+[[projects]]
+  branch = "master"
+  digest = "1:918a46e4a2fb83df33f668f5a6bd51b2996775d073fce1800d3ec01b0a5ddd2b"
+  name = "golang.org/x/xerrors"
+  packages = [
+    ".",
+    "internal",
+  ]
+  pruneopts = "UT"
+  revision = "9bdfabe68543c54f90421aeb9a60ef8061b5b544"
 
 [solve-meta]
   analyzer-name = "dep"
