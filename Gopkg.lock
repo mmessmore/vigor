@@ -10,23 +10,20 @@
   version = "v1.4.0"
 
 [[projects]]
-  digest = "1:857519ede212509c0325923628682c94d837329fda0f7409164fb4862618e50d"
+  digest = "1:f3934630407c231881944184f7e3a212b156d0090e07e142e1c0cd8212b1471e"
   name = "github.com/miekg/dns"
   packages = ["."]
   pruneopts = "UT"
-  revision = "2acbc9eff343291e671c1a9ba7be3201bf66dfd6"
-  version = "v1.1.17"
+  revision = "797f1f29538c2b511b4d61c1b8a74b0e481116c9"
+  version = "v1.1.41"
 
 [[projects]]
-  branch = "master"
-  digest = "1:d5891c5bca9c62e5d394ca26491d2b710a1dc08cedeb0ca8f9ac4c3305120b02"
-  name = "golang.org/x/crypto"
-  packages = [
-    "ed25519",
-    "ed25519/internal/edwards25519",
-  ]
+  digest = "1:fa3553fabe9a46fb5e86c76be8eb62e1a713b2918ab83aa1a4c3f976fd1fc39e"
+  name = "golang.org/x/mod"
+  packages = ["semver"]
   pruneopts = "UT"
-  revision = "a92615f3c49003920a58dedcf32cf55022cefb8d"
+  revision = "d6ab96f2441f9631f81862375ef66782fc4a9c12"
+  version = "v0.4.2"
 
 [[projects]]
   branch = "master"
@@ -44,11 +41,48 @@
 
 [[projects]]
   branch = "master"
-  digest = "1:0a40b0bdd57a93e741d8557465be3a2edeec408e9b6399586ad65bbe8e355796"
+  digest = "1:40a65812489286d65b0ce197553c68ff3220524576c18cf76bceef5f3487fa93"
   name = "golang.org/x/sys"
-  packages = ["unix"]
+  packages = [
+    "execabs",
+    "internal/unsafeheader",
+    "unix",
+  ]
   pruneopts = "UT"
-  revision = "fa43e7bc11baaae89f3f902b2b4d832b68234844"
+  revision = "1e4c9ba3b0c4fcddbe90893331bdc829813066a1"
+
+[[projects]]
+  digest = "1:270683783f3b265096d366f78f358af4af1cfdd708fdacb918912211d9227a9e"
+  name = "golang.org/x/tools"
+  packages = [
+    "go/ast/astutil",
+    "go/gcexportdata",
+    "go/internal/gcimporter",
+    "go/internal/packagesdriver",
+    "go/packages",
+    "go/types/typeutil",
+    "internal/event",
+    "internal/event/core",
+    "internal/event/keys",
+    "internal/event/label",
+    "internal/gocommand",
+    "internal/packagesinternal",
+    "internal/typesinternal",
+  ]
+  pruneopts = "UT"
+  revision = "fe37c9e135b934191089b245ac29325091462508"
+  version = "v0.1.0"
+
+[[projects]]
+  branch = "master"
+  digest = "1:918a46e4a2fb83df33f668f5a6bd51b2996775d073fce1800d3ec01b0a5ddd2b"
+  name = "golang.org/x/xerrors"
+  packages = [
+    ".",
+    "internal",
+  ]
+  pruneopts = "UT"
+  revision = "5ec99f83aff198f5fbd629d6c8d8eb38a04218ca"
 
 [solve-meta]
   analyzer-name = "dep"
